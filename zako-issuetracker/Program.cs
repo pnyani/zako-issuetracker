@@ -182,15 +182,18 @@ class Program
                                 .AddOption("Feature", "feature", "새로운 기능을 제안해요!")
                                 .AddOption("Enhancement", "enhancement", "기존 기능을 개선해요!")
                                 .Build();
-
-                            
                             
                             var inModal = new ModalBuilder()
                                 .WithTitle("새 이슈")
                                 .WithCustomId("ISSUE_MODAL")
                                 .AddTextInput("이슈 이름", "issue_title", placeholder:"이슈 이름을 입력하세요", required:true)
-                                .AddComponents(new List<IMessageComponent>{tagSel}, 1)
-                                
+                                //.AddComponents(new List<IMessageComponent>{tagSel}, 1)
+                                .AddSelectMenu("이슈 태그", "issue_tag", options:new List<SelectMenuOptionBuilder>
+                                {
+                                    new SelectMenuOptionBuilder().WithLabel("Bug").WithValue("bug)").WithDescription("오류가 발생했어요!")
+                                    ,new SelectMenuOptionBuilder().WithLabel("Feature").WithValue("feature").WithDescription("새로운 기능을 제안해요!")
+                                    ,new SelectMenuOptionBuilder().WithLabel("Enhancement").WithValue("enhancement").WithDescription("기존 기능을 개선해요!")
+                                }, required:true)
                                 .AddTextInput("이슈 설명", "issue_detail", placeholder:"이슈 설명을 입력하세요", required:true, style: TextInputStyle.Paragraph);
                                 
                             await slashCommand.RespondWithModalAsync(inModal.Build());
