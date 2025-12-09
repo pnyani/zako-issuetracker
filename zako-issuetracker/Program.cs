@@ -160,6 +160,36 @@ class Program
         {
             switch (modal.Data.CustomId)
             {
+                case "ISSUE_MODAL":
+                {
+                    var s = modal.Data.Components.First(
+                        x => x.CustomId == "issue_title")?.Value ?? "-";
+
+                    var c = modal.Data.Components.ToArray();
+                    object[] values = new object[c.Length];
+                    for (int i = 0; i < c.Length; i++)
+                        values[i] = c[i].Value ?? "NULL";
+
+                    values[1] = c[1].Values.First();
+                    Console.WriteLine($"values[1] = {values[1].ToString()}");
+                    Console.WriteLine();
+                    
+                    
+                    var embed = new EmbedBuilder().WithTitle("새 이슈가 생성되었어요!")
+                        .AddField("Issue Name", values[0])
+                        .AddField("Issue Tag", values[1])
+                        .AddField("Issue Detail", values[2])
+                        
+                        //.AddField("이슈 이름", modal.Data.Components.First(x => x.CustomId == "issue_title")?.Value)
+                        //.AddField("이슈 태그", modal.Data.Components.First(x => x.CustomId == "issue_tag")?.Value)
+                        //.AddField("이슈 설명", modal.Data.Components.First(x => x.CustomId == "issue_detail")?.Value)
+                        .WithColor(Color.Blue)
+                        .WithCurrentTimestamp()
+                        .Build();
+
+                    await modal.RespondAsync(embed: embed, ephemeral:true);
+                }
+                    break;
                 default:
                     await modal.RespondAsync("undfined command");
                     break;
@@ -175,13 +205,6 @@ class Program
                     switch (subCommand)
                     {
                         case "new":
-                            var tagSel = new SelectMenuBuilder()
-                                .WithCustomId("issueTagSelect")
-                                .WithPlaceholder("이슈 태그 선택")
-                                .AddOption("Bug", "bug", "오류가 발생했어요!")
-                                .AddOption("Feature", "feature", "새로운 기능을 제안해요!")
-                                .AddOption("Enhancement", "enhancement", "기존 기능을 개선해요!")
-                                .Build();
                             
                             var inModal = new ModalBuilder()
                                 .WithTitle("새 이슈")
@@ -190,7 +213,7 @@ class Program
                                 //.AddComponents(new List<IMessageComponent>{tagSel}, 1)
                                 .AddSelectMenu("이슈 태그", "issue_tag", options:new List<SelectMenuOptionBuilder>
                                 {
-                                    new SelectMenuOptionBuilder().WithLabel("Bug").WithValue("bug)").WithDescription("오류가 발생했어요!")
+                                    new SelectMenuOptionBuilder().WithLabel("Bug").WithValue("bug").WithDescription("오류가 발생했어요!")
                                     ,new SelectMenuOptionBuilder().WithLabel("Feature").WithValue("feature").WithDescription("새로운 기능을 제안해요!")
                                     ,new SelectMenuOptionBuilder().WithLabel("Enhancement").WithValue("enhancement").WithDescription("기존 기능을 개선해요!")
                                 }, required:true)
@@ -199,6 +222,9 @@ class Program
                             await slashCommand.RespondWithModalAsync(inModal.Build());
                             return;
                         case "status":
+                        {
+                            
+                        }
                             return;
                         case "list":
                             return;
