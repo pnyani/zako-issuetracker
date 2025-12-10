@@ -1,7 +1,7 @@
 ﻿using Discord;
 //using Discord.Interactions.Builders;
-using Discord.Commands;
 using Discord.WebSocket;
+
 
 namespace zako_issuetracker;
 
@@ -13,6 +13,7 @@ public enum IssueTag
 public enum IssueStatus
 {
     Proposed, Approved, Rejected, InProgress, Completed
+    // 0, 1, 2, 3, 4
 }
 class Program
 {
@@ -130,17 +131,7 @@ class Program
         // The bot should never respond to itself.
         if (message.Author.Id == _client.CurrentUser.Id)
             return;
-
-
-        if (message.Content == "!issue")
-        {
-            var cb = new ComponentBuilder()
-                .WithButton("Click me!", "unique-id", ButtonStyle.Primary);
-
-            // Send a message with content 'pong', including a button.
-            // This button needs to be build by calling .Build() before being passed into the call.
-            await message.Channel.SendMessageAsync("pong!", components: cb.Build());
-        }
+        
     }
     private static async Task InteractionCreatedAsync(SocketInteraction interaction)
     {
@@ -168,24 +159,46 @@ class Program
                         values[i] = c[i].Value ?? "NULL";
 
                     values[1] = c[1].Values.First();
-                    Console.WriteLine($"values[1] = {values[1].ToString()}");
-                    Console.WriteLine();
+                    //Console.WriteLine($"values[1] = {values[1]}");
+
+                    string userId = modal.User.Id.ToString();
                     
-                    
-                    var embed = new EmbedBuilder().WithTitle("새 이슈가 생성되었어요!")
+                    var embed = new EmbedBuilder().WithTitle("이슈를 DB에 등록했습니다.")
                         .AddField("Issue Name", values[0])
                         .AddField("Issue Tag", values[1])
                         .AddField("Issue Detail", values[2])
-                        
-                        //.AddField("이슈 이름", modal.Data.Components.First(x => x.CustomId == "issue_title")?.Value)
-                        //.AddField("이슈 태그", modal.Data.Components.First(x => x.CustomId == "issue_tag")?.Value)
-                        //.AddField("이슈 설명", modal.Data.Components.First(x => x.CustomId == "issue_detail")?.Value)
                         .WithColor(Color.Blue)
                         .WithCurrentTimestamp()
                         .Build();
+                    bool result;
+                    try
+                    {
+                         result = Issue.IssueData.StoreIssue(values[0].ToString(), values[2].ToString(),
+                            Enum.Parse<IssueTag>(values[1].ToString(), true), userId);
+                    }
+                    catch (Exception e)
+                    {
+                        result = false;
+                        Console.WriteLine(e.Message);
+                    }
+                    
+                    if (!result)
+                    {
+                        var errorEmbed = new EmbedBuilder().WithTitle("이슈 등록에 실패했습니다.")
+                            .WithColor(Color.Red)
+                            .AddField("Issue Name", values[0])
+                            .AddField("Issue Tag", values[1])
+                            .AddField("Issue Detail", values[2])
+                            .WithCurrentTimestamp()
+                            .Build();
+                        await modal.RespondAsync(embed: errorEmbed, ephemeral: false);
+                    }
+                    else
+                    {
+                        await modal.RespondAsync(embed: embed, ephemeral: true);
+                    }
 
-                    await modal.RespondAsync(embed: embed, ephemeral:true);
-                }
+            }
                     break;
                 default:
                     await modal.RespondAsync("undfined command");
