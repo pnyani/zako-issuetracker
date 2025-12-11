@@ -14,8 +14,8 @@ public enum IssueTag
 
 public enum IssueStatus
 {
-    Proposed, Approved, Rejected, InProgress, Completed
-    // 0, 1, 2, 3, 4
+    Proposed, Approved, Rejected
+    // 0, 1, 2,
 }
 class Program
 {
@@ -60,7 +60,6 @@ class Program
         var issueTagChoices = new SlashCommandOptionBuilder()
             .WithName("tags")
             .WithDescription("Tags of issue")
-            .WithRequired(true)
             .WithType(ApplicationCommandOptionType.String);
         foreach (var tag in Enum.GetNames(typeof(IssueTag)))
         {
@@ -287,6 +286,28 @@ class Program
                         }
                             break;
                         case "list":
+                        {
+                            IssueTag? tag = Enum.Parse<IssueTag>(slashCommand.Data.Options.First().Options.First().Value.ToString() ?? null, true);
+                            
+                            Dictionary<int, Issue.IssueContent> _dict
+                                = Issue.IssueData.ListOfIssue(tag);
+                            
+                            var eb = new EmbedBuilder()
+                                .WithTitle($"이슈 목록 - Tag: {tag}")
+                                .WithColor(Color.Blue)
+                                .WithCurrentTimestamp();
+                            foreach (var ctx in _dict)
+                            {
+                                eb.AddField($"Id : {ctx.Key.ToString()}",
+                                    $"Name: {ctx.Value.Name}\n" +
+                                    $"Detail: {ctx.Value.Detail}\n" +
+                                    $"Tag: {ctx.Value.Tag}\n" +
+                                    $"Status: {ctx.Value.Status}\n" +
+                                    $"User: <@{ctx.Value.UserId}>\n");
+                            }
+                            
+                            await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: true);
+                        }
                             break;
                         case "export":
                             break;

@@ -13,7 +13,7 @@ public struct IssueContent
 
 public class IssueData
 {
-    static Dictionary<string, IssueContent> _dict = new Dictionary<string, IssueContent>();
+    static Dictionary<int, IssueContent> _dict = new Dictionary<int, IssueContent>();
     
     public static bool StoreIssue(string? name, string? detail, IssueTag? tag, string userId)
     {
@@ -53,16 +53,29 @@ public class IssueData
         return true;
     }
 
-    public static Dictionary<string, IssueContent> ListOfIssue(IssueTag? tag)
+    public static Dictionary<int, IssueContent> ListOfIssue(IssueTag? tag)
     {
         string cTag = tag?.ToString() ?? "%";
         
         var con = new SqliteConnection("Data Source=" + DataBaseHelper.dbPath);
         con.Open();
         var cmd = con.CreateCommand();
+        cmd.CommandText = "SELECT ROWID, name, detail, tag, status, discord FROM zako WHERE tag = @tag";
+        cmd.Parameters.AddWithValue("@tag", cTag);
         
+        var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            _dict.Add(reader.GetInt32(0), new IssueContent
+            {
+                Name = reader.GetString(1),
+                Detail =  reader.GetString(2),
+                Tag = Enum.Parse<IssueTag>(reader.GetString(3)),
+                Status = Enum.Parse<IssueStatus>(reader.GetString(4)),
+                UserId = reader.GetString(5)
+            });
+        }
         return _dict;
-
     }
 }
 
