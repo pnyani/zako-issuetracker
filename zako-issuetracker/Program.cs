@@ -25,6 +25,9 @@ class Program
 
     public static async Task Main(string[] args)
     {
+        Console.Write(" Enter your bot token >> ");
+        string botToken = Console.ReadLine() ?? "";
+        
         var config = new DiscordSocketConfig
         {
             GatewayIntents = GatewayIntents.All
@@ -38,7 +41,8 @@ class Program
         _client.MessageReceived += MessageReceivedAsync;
         _client.InteractionCreated += InteractionCreatedAsync;
      
-        await _client.LoginAsync(TokenType.Bot, "MTQ0NzE2Nzc2MDU3MTMwNjAzNQ.GfwkL8.t0FgeFgQdAZEqaHyyU7tFaEHyYlOTHdiaBuSAU"); // token here
+        //await _client.LoginAsync(TokenType.Bot, "MTQ0NzE2Nzc2MDU3MTMwNjAzNQ.GfwkL8.t0FgeFgQdAZEqaHyyU7tFaEHyYlOTHdiaBuSAU"); // token here
+        await _client.LoginAsync(TokenType.Bot, botToken);
         
         await _client.StartAsync();
         
