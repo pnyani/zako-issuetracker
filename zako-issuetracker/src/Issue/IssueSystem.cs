@@ -77,8 +77,9 @@ public class IssueData
                 UserId = reader.GetString(5)
             });
         }
-        return _dict;
         con.Close();
+        //return _dict;
+        
         return dict;
     }
 
