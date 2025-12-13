@@ -42,7 +42,7 @@ class Program
         _client.InteractionCreated += InteractionCreatedAsync;
      
         //await _client.LoginAsync(TokenType.Bot, "MTQ0NzE2Nzc2MDU3MTMwNjAzNQ.GfwkL8.t0FgeFgQdAZEqaHyyU7tFaEHyYlOTHdiaBuSAU"); // token here
-        await _client.LoginAsync(TokenType.Bot, botToken);
+        await _client.LoginAsync(TokenType.Bot, botToken); //or, read from console
         
         await _client.StartAsync();
         
