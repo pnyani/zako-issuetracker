@@ -20,6 +20,7 @@ Zako IssueTracker ♥ for minco
 !['이슈추가모달'](/img/Modal.png)
 
 - `/이슈 삭제`: ~~본인 혹은 관리자가 사용 가능. proposed 또는 rejected인 이슈는 본인이 삭제 가능. approved인 이슈는 본인은 못하고 관리자만 가능. 관리자는 언제나 삭제 가능.~~
+  <br> 삭제가 필요하다면 DB에 직접 접근하도록 합니다.
 - `/이슈 상태 <상태: proposed, approved, rejected중 택1>`: 관리자만 사용 가능. 이슈 상태를 바꿈.
 
 ![`/이슈 상태`](img/status.png)
