@@ -1,6 +1,11 @@
 # zako-issuetracker
 Zako IssueTracker ♥ for minco
 
+## Environment Variables
+* DISCORD_TOKEN : Bot token
+* SQLITE_FILE : SQLITE Path
+* ADMIN_IDS : Admins discord userId.<br> examples ```adminId1,adminId2,adminId3,(...),adminId7,adminId8```
+
 ## creating database
 ```sql
 create table zako(
