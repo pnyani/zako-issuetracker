@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  zako:
+    build:
+      context: ./zako-issuetracker
+      dockerfile: Dockerfile
+    image: zako-issuetracker:latest
+    restart: unless-stopped
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      ADMIN_IDS: ${ADMIN_IDS}
+      SQLITE_FILE: ${SQLITE_FILE:-/app/data/zako.db}
+    volumes:
+      - zako-data:/app/data
+    # The bot does not expose network ports by default
+
+volumes:
+  zako-data:
+    driver: local
