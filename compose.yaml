@@ -6,7 +6,7 @@
       dockerfile: zako-issuetracker/Dockerfile
     environment:
       DISCORD_TOKEN: 
-      SQLITE_PATH: /data/zako.sqlite
+      SQLITE_FILE: /data/zako.sqlite
       ADMIN_IDS: 
     volumes:
       - ./data:/data
