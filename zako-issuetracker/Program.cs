@@ -289,7 +289,7 @@ class Program
                         case "status":
                         {
                             string[] adminIds = EnvLoader.GetAdminIds();
-                            if (AdminTool.IsAdmin(slashCommand.User.Id.ToString()))
+                            if (!AdminTool.IsAdmin(slashCommand.User.Id.ToString()))
                             {
                                 var eb = new EmbedBuilder()
                                     .WithTitle("안돼")
