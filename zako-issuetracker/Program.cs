@@ -170,7 +170,7 @@ class Program
                 
                 if (currentPage <= 1)
                 {
-                    await component.RespondAsync("첫 페이지입니다!", ephemeral: true);
+                    await component.RespondAsync("첫 페이지입니다!", ephemeral: false);
                     return;
                 }
                 
@@ -194,7 +194,7 @@ class Program
                 int maxPage = (int)Math.Ceiling((double)dict.Count / 10);
                 if (currentPage >= maxPage)
                 {
-                    await component.RespondAsync("마지막 페이지입니다!", ephemeral: true);
+                    await component.RespondAsync("마지막 페이지입니다!", ephemeral: false);
                     return;
                 }
 
@@ -250,7 +250,7 @@ class Program
                             .AddField("이슈 설명", values[2])
                             .WithCurrentTimestamp()
                             .Build();
-                        await modal.RespondAsync(embed: errorEmbed, ephemeral: true);
+                        await modal.RespondAsync(embed: errorEmbed, ephemeral: false);
                     }
                     else
                     {
@@ -324,7 +324,7 @@ class Program
                                     .WithDescription("상태 변경에 실패했습니다")
                                     .WithColor(Color.Red)
                                     .WithCurrentTimestamp();
-                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: true);
+                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: false);
                             }
                             else
                             {
@@ -402,7 +402,7 @@ class Program
                                     .WithDescription("해당 이슈를 찾을 수 없습니다")
                                     .WithColor(Color.Red)
                                     .WithCurrentTimestamp();
-                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: true);
+                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: false);
                             }
                             else
                             {
