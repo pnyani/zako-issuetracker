@@ -170,7 +170,7 @@ class Program
                 
                 if (currentPage <= 1)
                 {
-                    await component.RespondAsync("This is the first page!", ephemeral: true);
+                    await component.RespondAsync("This is the first page!", ephemeral: false);
                     return;
                 }
                 await component.UpdateAsync(msg =>
@@ -193,7 +193,7 @@ class Program
                 int maxPage = (int)Math.Ceiling((double)dict.Count / 10);
                 if (currentPage >= maxPage)
                 {
-                    await component.RespondAsync("This is the last page!", ephemeral: true);
+                    await component.RespondAsync("This is the last page!", ephemeral: false);
                     return;
                 }
 
@@ -253,7 +253,7 @@ class Program
                     }
                     else
                     {
-                        await modal.RespondAsync(embed: embed, ephemeral: true);
+                        await modal.RespondAsync(embed: embed, ephemeral: false);
                     }
                 }   
                     break;
@@ -350,7 +350,7 @@ class Program
                             
                             await slashCommand.RespondAsync
                                 (embed: commands.IssueListEmbed.BuildIssueListEmbed(dict,1 , tag).Build(),
-                                    components: components.Pages.Button().Build(), ephemeral: true);
+                                    components: components.Pages.Button().Build(), ephemeral: false);
                         }
                             break;
                         case "export":
@@ -419,7 +419,7 @@ class Program
                                     .WithColor(Color.Blue)
                                     .WithCurrentTimestamp();
                                 
-                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral:true);
+                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: false);
                             }
                         }
                             break;
