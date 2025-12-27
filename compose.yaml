@@ -5,8 +5,8 @@
       context: .
       dockerfile: zako-issuetracker/Dockerfile
     environment:
-      DISCORD_TOKEN: 
+      DISCORD_TOKEN:
       SQLITE_FILE: /data/zako.sqlite
-      ADMIN_IDS: 
+      ADMIN_IDS:
     volumes:
       - ./data:/data:rw
