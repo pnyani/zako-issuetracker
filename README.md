@@ -1,3 +1,5 @@
+[![CI/CD](https://github.com/zako-ac/zako-issuetracker/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/zako-ac/zako-issuetracker/actions/workflows/ci-cd.yml)
+
 # zako-issuetracker
 Zako IssueTracker ♥ for minco
 
