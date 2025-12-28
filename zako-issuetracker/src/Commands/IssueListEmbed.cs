@@ -4,7 +4,7 @@ namespace zako_issuetracker.commands;
 
 public static class IssueListEmbed
 {
-    private const int PageSize = 5;
+    private static int PageSize = EnvLoader.GetPageSize();
     
     
     public static Embed[] BuildIssueListEmbed(Dictionary<int, Issue.IssueContent> dict, int page, IssueTag? tag = null, IssueStatus? status = null)

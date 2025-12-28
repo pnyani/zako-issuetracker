@@ -202,7 +202,7 @@ class Program
                     tag = null;
                 
                 Dictionary<int, Issue.IssueContent> dict = await Issue.IssueData.ListOfIssueAsync(tag);
-                int maxPage = (int)Math.Ceiling((double)dict.Count / 10);
+                int maxPage = (int)Math.Ceiling((double)dict.Count / EnvLoader.GetPageSize());
                 if (currentPage >= maxPage)
                 {
                     await component.RespondAsync("마지막 페이지입니다!", ephemeral: true);

@@ -31,6 +31,14 @@ public static class EnvLoader
         
         return ids.Split(",");
     }
+
+    public static int GetPageSize()
+    {
+        string? v = Environment.GetEnvironmentVariable("EMBED_PAGE_SIZE");
+        if (v == null)
+            return 5;
+        return int.Parse(v);
+    }
 }
 
 public static class AdminTool

@@ -8,5 +8,6 @@
       DISCORD_TOKEN:
       SQLITE_FILE: /data/zako.sqlite
       ADMIN_IDS:
+      EMBED_PAGE_SIZE: 5
     volumes:
       - ./data:/data:rw
