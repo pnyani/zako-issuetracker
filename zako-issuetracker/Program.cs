@@ -118,7 +118,7 @@ class Program
                 .WithType(ApplicationCommandOptionType.SubCommand))
             // status
             .AddOption(new SlashCommandOptionBuilder()
-                .WithName("status")
+                .WithName("set-status")
                 .WithDescription("상태 설정")
                 .AddOption(new SlashCommandOptionBuilder() // status(int issueId)
                     .WithName("id")
@@ -149,8 +149,14 @@ class Program
                     .WithRequired(true)
                     .WithType(ApplicationCommandOptionType.Integer)))
             .Build();
+        
+        var ping = new SlashCommandBuilder()
+            .WithName("ping")
+            .WithDescription("Pong!")
+            .Build();
 
         await _client.CreateGlobalApplicationCommandAsync(newIssue);
+        await _client.CreateGlobalApplicationCommandAsync(ping);
     }
     
     private static async Task MessageReceivedAsync(SocketMessage message)
@@ -294,7 +300,7 @@ class Program
                                 
                             await slashCommand.RespondWithModalAsync(inModal.Build());
                             break;
-                        case "status":
+                        case "set-status":
                         {
                             string[] adminIds = EnvLoader.GetAdminIds();
                             if (!AdminTool.IsAdmin(slashCommand.User.Id.ToString()))
@@ -470,6 +476,14 @@ class Program
                             //await slashCommand.RespondAsync("Unknown command");
                             break;
                     }
+                    break;
+                case "ping":
+                {
+                    
+                    
+                    
+                    await slashCommand.RespondAsync($"Pong! {_client.Latency}");
+                }
                     break;
                 default:
                     await slashCommand.RespondAsync("Unkown command");
