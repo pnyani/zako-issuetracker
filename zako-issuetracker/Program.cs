@@ -457,7 +457,12 @@ class Program
 
                             if (!result)
                             {
-                                
+                                var eb = new EmbedBuilder()
+                                    .WithTitle("오류가 발생했습니다")
+                                    .WithDescription("이슈 삭제에 실패했습니다")
+                                    .WithColor(Color.Red)
+                                    .WithCurrentTimestamp();
+                                await slashCommand.RespondAsync(embed: eb.Build(), ephemeral: false);
                             }
                             else
                             {

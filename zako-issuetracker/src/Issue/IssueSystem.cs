@@ -153,7 +153,7 @@ public class IssueData
             await using var con = new SqliteConnection("Data Source=" + DataBaseHelper.dbPath);
             await con.OpenAsync();
             await using var cmd = con.CreateCommand();
-            cmd.CommandText = "UPDATE zako SET (status, name, detail) VALUES (@status, @name, @detail) WHERE id = @id";
+            cmd.CommandText = "UPDATE zako SET status = @status, name = @name, detail = @detail WHERE id = @id";
             cmd.Parameters.AddWithValue("@id", issueId);
             cmd.Parameters.AddWithValue("@status", IssueStatus.Deleted);
             cmd.Parameters.AddWithValue("@name", "Deleted Issue");
