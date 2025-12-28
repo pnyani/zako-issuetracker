@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using Discord;
-//using Discord.Interactions.Builders;
+﻿using Discord;
 using Discord.WebSocket;
 using Color = Discord.Color;
 using System.Text.Json;
@@ -362,11 +360,11 @@ class Program
                             if (!string.IsNullOrEmpty(tagStr))
                                 tag = Enum.Parse<IssueTag>(tagStr, true);
                             
-                            string? statusSTr = slashCommand.Data.Options.First().Options
+                            string? statusStr = slashCommand.Data.Options.First().Options
                                 .FirstOrDefault(o => o.Name == "status")?.Value?.ToString();
                             IssueStatus? status = null;
-                            if (!string.IsNullOrEmpty(statusSTr))
-                                status = Enum.Parse<IssueStatus>(statusSTr, true);
+                            if (!string.IsNullOrEmpty(statusStr))
+                                status = Enum.Parse<IssueStatus>(statusStr, true);
                             
                             Dictionary<int, Issue.IssueContent> dict = await Issue.IssueData.ListOfIssueAsync(tag);
                             
