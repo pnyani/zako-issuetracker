@@ -270,7 +270,7 @@ class Program
                 }   
                     break;
                 default:
-                    //await modal.RespondAsync("undfined command");
+                    //await modal.RespondAsync("Undefined command");
                     break;
             }
         }
@@ -481,15 +481,10 @@ class Program
                     }
                     break;
                 case "ping":
-                {
-                    
-                    
-                    
                     await slashCommand.RespondAsync($"Pong! {_client.Latency}");
-                }
                     break;
                 default:
-                    await slashCommand.RespondAsync("Unkown command");
+                    await slashCommand.RespondAsync("Unknown command");
                     break;
             }
         }
